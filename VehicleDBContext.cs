@@ -27,6 +27,16 @@ namespace CodeFirst.Vehicle.DataAccessLayer
                 // optionsBuilder.UseSqlServer("Data Source=RAJAT3644;Initial Catalog= Vehicle;User Id=sa;Password=MySql#3816;TrustServerCertificate=true");
             }
         }
+        //the below data anotation can be used when dbfunction name and function name is different
+       
+       
+        [DbFunction("Ufn_GenerateNewVehicleCategoryID", IsBuiltIn = false)]
+        public static byte GetCategoryIDfunction(byte categoryId)
+        {
+            Console.WriteLine("{0} is the category id", categoryId);
+
+            return 0;
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
            
@@ -42,7 +52,12 @@ namespace CodeFirst.Vehicle.DataAccessLayer
                 .HasConstraintName("FK_VehicleProduct_VehicleCategory");
 
 
-            });      
+            });
+            // when scalar function data annotation is not usied  is name and schema
+        //modelBuilder.HasDefaultSchema("dbo")
+                //0is default value
+          //  .HasDbFunction(() => VehicleDBContext.GetCategoryIDfunction(0))
+            //.HasName("Ufn_GenerateNewVehicleCategoryID");
         }
     }
 }
